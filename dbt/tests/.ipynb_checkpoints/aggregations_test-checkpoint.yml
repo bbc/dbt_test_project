@@ -1,0 +1,19 @@
+version: 1
+
+models:
+  - name: aggregations
+    tests:
+      - not_null:
+          columns: [brand_id, brand_title, date_of_event, users, time_spent]
+      - unique:
+          column: brand_id
+          
+  - name: age_splits
+    tests:
+      - not_null:
+          columns: [age_range, users]
+      - unique:
+          column: age_range
+      - accepted_values:
+          column: age_range
+          values: [0-5, 11-15, 16-19, 20-24, 25-29, 30-34, 35-39, 40-44, 45-49, 50-54, 55-59, 6-10, 60-64, 65-70, >70]
