@@ -1,0 +1,45 @@
+version: 1
+
+models:
+  - name: load_raw_data
+    columns:
+      - name: brand_id
+      - name: brand_title
+      - name: date_of_event
+      - name: audience_id
+      - name: age_range
+      - name: playback_time_total
+
+  - name: aggregations
+    columns:
+      - name: brand_id
+        tests:
+          - unique
+      - name: brand_title
+        tests:
+          - not_null
+      - name: date_of_event
+        tests:
+          - not_null
+      - name: users
+        tests:
+          - not_null
+      - name: time_spent
+        tests:
+          - not_null
+    relationships:
+      - { source: load_raw_data, target: aggregations }
+
+  - name: age_splits
+    columns:
+      - name: age_range
+        tests:
+          - not_null
+          - accepted_values
+          - unique
+      - name: users
+        tests:
+          - not_null
+    relationships:
+      - { source: load_raw_data, target: age_splits }
+
